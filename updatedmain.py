@@ -5,7 +5,14 @@ from shodan import Shodan
 import json
 from pybinaryedge import BinaryEdge
 
-ar = argparse.ArgumentParser(description='List the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
+logo="""
+   __                                          _            
+  /__\ ___  ___ ___  _ __  _ __ ___   __ _ ___| |_ ___ _ __ 
+ / \/// _ \/ __/ _ \| '_ \| '_ ` _ \ / _` / __| __/ _ \ '__|
+/ _  \  __/ (_| (_) | | | | | | | | | (_| \__ \ ||  __/ |   
+\/ \_/\___|\___\___/|_| |_|_| |_| |_|\__,_|___/\__\___|_|                                                       
+    \n\n"""
+ar = argparse.ArgumentParser(description=logo+'List the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
 
 ar.add_argument("-U","--url", required=True,help="\nEnter Domain name without https or http.(ex- example.com)",type=str)
 ar.add_argument("-F","--file", required=True,help="\nWhere to save results (ex- filename or filepath)",type=str)
@@ -181,15 +188,7 @@ def checkkeys():
 def displaystatus():
     checkkeys()
     global emptyapikeys,apierrors
-    print("""
-   __                                          _            
-  /__\ ___  ___ ___  _ __  _ __ ___   __ _ ___| |_ ___ _ __ 
- / \/// _ \/ __/ _ \| '_ \| '_ ` _ \ / _` / __| __/ _ \ '__|
-/ _  \  __/ (_| (_) | | | | | | | | | (_| \__ \ ||  __/ |   
-\/ \_/\___|\___\___/|_| |_|_| |_| |_|\__,_|___/\__\___|_|                                                           
-    \n\n
-    """)
-    print("Engines\t\t\tStatus\t\tReason\n")
+    print(logo+"Engines\t\t\tStatus\t\tReason\n")
     for x in ['google','bing','duckduckgo','alienvault','urlscan','threatcrowd','rapiddns']:
         print(f"{x:<15}\t\tActive")
     for x in ['shodan','virustotal','securitytrails','binaryedge']:
