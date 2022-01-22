@@ -12,7 +12,7 @@ logo="""
 / _  \  __/ (_| (_) | | | | | | | | | (_| \__ \ ||  __/ |   
 \/ \_/\___|\___\___/|_| |_|_| |_| |_|\__,_|___/\__\___|_|                                                       
     \n\n"""
-ar = argparse.ArgumentParser(description=logo+'List the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
+ar = argparse.ArgumentParser(description=logo+'List of the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
 
 ar.add_argument("-U","--url", required=True,help="\nEnter Domain name without https or http.(ex- example.com)",type=str)
 ar.add_argument("-F","--file", required=True,help="\nWhere to save results (ex- filename or filepath)",type=str)
