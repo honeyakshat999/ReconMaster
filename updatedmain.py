@@ -10,7 +10,7 @@ logo="""
   /__\ ___  ___ ___  _ __  _ __ ___   __ _ ___| |_ ___ _ __ 
  / \/// _ \/ __/ _ \| '_ \| '_ ` _ \ / _` / __| __/ _ \ '__|
 / _  \  __/ (_| (_) | | | | | | | | | (_| \__ \ ||  __/ |   
-\/ \_/\___|\___\___/|_| |_|_| |_| |_|\__,_|___/\__\___|_|                                                       
+\/ \_/\___|\___\___/|_| |_|_| |_| |_|\__,_|___/\__\___|_|      
     \n\n"""
 ar = argparse.ArgumentParser(description=logo+'List of the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
 
