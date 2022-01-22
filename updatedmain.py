@@ -152,7 +152,7 @@ def removeDups(filename):
             file.truncate()
             for line in set(lines):
                 file.write(line)
-        print(f'\nThe data has been saved to a {filename}')
+        print(f'\nThe data has been saved to {filename}')
         
 
 def getkey(keyname):
