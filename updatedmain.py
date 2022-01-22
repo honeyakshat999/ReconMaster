@@ -200,7 +200,6 @@ if(args.engine == 'all'):
     duckduckgo()
     alienvault()
     rapiddns()
-    securitytrails()
     threatcrowd()
     urlscan()
     for y in [x for x in ['shodan','binaryedge','virustotal','securitytrails'] if x not in apierrors+emptyapikeys]:
