@@ -181,6 +181,14 @@ def checkkeys():
 def displaystatus():
     checkkeys()
     global emptyapikeys,apierrors
+    print("""
+   __                                          _            
+  /__\ ___  ___ ___  _ __  _ __ ___   __ _ ___| |_ ___ _ __ 
+ / \/// _ \/ __/ _ \| '_ \| '_ ` _ \ / _` / __| __/ _ \ '__|
+/ _  \  __/ (_| (_) | | | | | | | | | (_| \__ \ ||  __/ |   
+\/ \_/\___|\___\___/|_| |_|_| |_| |_|\__,_|___/\__\___|_|                                                           
+    \n\n
+    """)
     print("Engines\t\t\tStatus\t\tReason\n")
     for x in ['google','bing','duckduckgo','alienvault','urlscan','threatcrowd','rapiddns']:
         print(f"{x:<15}\t\tActive")
