@@ -10,7 +10,7 @@ ar = argparse.ArgumentParser(description='List the Required arguments',formatter
 ar.add_argument("-U","--url", required=True,help="\nEnter Domain name without https or http.(ex- example.com)",type=str)
 ar.add_argument("-F","--file", required=True,help="\nWhere to save results (ex- filename or filepath)",type=str)
 ar.add_argument("-E","--engine", required=False,help="""\nWhere to collect data. 
-use 'all'(default) keyword to use every search engine.\n
+used 'all'(default) keyword to use every search engine.\n
 other explicit options:                  
 google
 bing
