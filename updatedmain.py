@@ -204,7 +204,6 @@ if(args.engine == 'all'):
     securitytrails()
     threatcrowd()
     urlscan()
-    virustotal()
     for y in [x for x in ['shodan','binaryedge','virustotal','securitytrails'] if x not in apierrors+emptyapikeys]:
         exec(f'{y}()')
     f.close()
