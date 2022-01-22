@@ -3,19 +3,15 @@ import requests
 import re
 import os
 from shodan import Shodan
-from shodan.exception import APIError
 import json
 from pybinaryedge import BinaryEdge
-import threading
-import multiprocessing
-from pybinaryedge import BinaryEdgeException
 
 ar = argparse.ArgumentParser(description='List the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
 
 ar.add_argument("-U","--url", required=True,help="\nEnter Domain name without https or http.(ex- example.com)",type=str)
 ar.add_argument("-F","--file", required=True,help="\nWhere to save results (ex- filename or filepath)",type=str)
 ar.add_argument("-E","--engine", required=False,help="""\nWhere to collect data. 
-used 'all'(default) keyword to use every search engine.\n
+use 'all'(default) keyword to use every search engine.\n
 other explicit options:                  
 google
 bing
@@ -168,16 +164,17 @@ def checkkeys():
         if keys[x] is None or keys[x]=='':
             emptyapikeys.append(y)
         else:
-            
             if y=='shodan':
-                try:
-                    Shodan(keys[x]).search('google.com')
-                except APIError:
+                if requests.get(f"https://api.shodan.io/shodan/host/8.8.8.8?key={keys[x]}").status_code!=200:
                     apierrors.append(y)
             elif y=='binaryedge':
-                try:
-                    BinaryEdge('s').domain_subdomains('google.com')
-                except BinaryEdgeException:
+                if requests.get('https://api.binaryedge.io/v2/user/subscription',headers={'X-Key':f"{keys[x]}"}).status_code!=200:
+                    apierrors.append(y)
+            elif y=='virustotal':
+                if requests.get(f"https://www.virustotal.com/vtapi/v2/domain/report?apikey={keys[x]}").status_code!=200:
+                    apierrors.append(y)
+            elif y=='securitytrails':
+                if requests.get("https://api.securitytrails.com/v1/history/trello.com/dns/a",headers={'Content-Type':"application/json",'apikey':f"{keys[x]}"}).status_code!=200:
                     apierrors.append(y)
 
       
@@ -194,7 +191,7 @@ def displaystatus():
         elif x in apierrors:
             print(f"{x:<15}\t\tInnactive\tInvalid API Keys!!")
         else:
-            print(f"{x:<10}\t\tActive")
+            print(f"{x:<15}\t\tActive")
     
 
 displaystatus()
@@ -208,15 +205,13 @@ if(args.engine == 'all'):
     threatcrowd()
     urlscan()
     virustotal()
-    if 'binaryedge' not in set(apierrors+emptyapikeys):
-        binaryedge()
-    if 'shodan' not in set(apierrors+emptyapikeys):
-        shodan()
+    for y in [x for x in ['shodan','binaryedge','virustotal','securitytrails'] if x not in apierrors+emptyapikeys]:
+        exec(f'{y}()')
     f.close()
     removeDups(args.file)
 
 elif args.engine in ['google','bing','duckduckgo','shodan','alienvault','virustotal','urlscan','threatcrowd','securitytrails','rapiddns','binaryedge']:
-    if args.engine in set(apierrors+emptyapikeys):
+    if args.engine in apierrors+emptyapikeys:
         f.close()
         print(f"\ncan't use {args.engine}")
     else:
