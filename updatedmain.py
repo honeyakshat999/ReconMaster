@@ -1,7 +1,6 @@
 import argparse
 import requests
 import re
-import os
 from shodan import Shodan
 import json
 from pybinaryedge import BinaryEdge
