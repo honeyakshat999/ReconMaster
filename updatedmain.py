@@ -194,9 +194,9 @@ def displaystatus():
         print(f"{x:<15}\t\tActive")
     for x in ['shodan','virustotal','securitytrails','binaryedge']:
         if x in emptyapikeys:
-            print(f"{x:<15}\t\tInnactive\tNo API Keys Found!!")
+            print(f"{x:<15}\t\tInactive\tNo API Keys Found!!")
         elif x in apierrors:
-            print(f"{x:<15}\t\tInnactive\tInvalid API Keys!!")
+            print(f"{x:<15}\t\tInactive\tInvalid API Keys!!")
         else:
             print(f"{x:<15}\t\tActive")
     
