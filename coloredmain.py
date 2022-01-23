@@ -195,9 +195,9 @@ def displaystatus():
         print(f"{css['green']+css['bright']}{x:<15}\t\tActive{css['reset']}")
     for x in ['shodan','virustotal','securitytrails','binaryedge']:
         if x in emptyapikeys:
-            print(f"{css['red']+css['bright']}{x:<15}\t\tInnactive\tNo API Keys Found!!{css['reset']}")
+            print(f"{css['red']+css['bright']}{x:<15}\t\tInactive\tNo API Keys Found!!{css['reset']}")
         elif x in apierrors:
-            print(f"{css['red']+css['bright']}{x:<15}\t\tInnactive\tInvalid API Keys!!{css['reset']}")
+            print(f"{css['red']+css['bright']}{x:<15}\t\tInactive\tInvalid API Keys!!{css['reset']}")
         else:
             print(f"{css['green']+css['bright']}{x:<15}\t\tActive{css['reset']}")
     
