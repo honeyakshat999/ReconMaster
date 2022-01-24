@@ -12,7 +12,6 @@ def wayback():
     url = "https://web.archive.org/cdx/search/cdx?url="+ "*."+domain + "/*"
     data = requests.get(url).text
     matching = set(re.compile(pattern).findall(data))
-    lock.acquire()
     for j in matching:
         f.write(''.join(j) + '\n')
 
