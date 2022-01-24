@@ -38,8 +38,8 @@ args = ar.parse_args()
 
 pattern = "(https?://|www\.)?((?:[\d\w\.\-]+)?" + args.url.lstrip('.').split()[0] + ")"
 f = open(args.file, mode='a+', encoding='utf-8')
-apierrors=[]
-emptyapikeys=[]
+apierrors={}
+
 def google():
     for i in range(0,110,10):
         url = "https://www.google.com/search?q=site%3a"+args.url+"&start="+str(i)
@@ -77,8 +77,7 @@ def shodan():
 
 def alienvault():
     url = "https://otx.alienvault.com/api/v1/indicators/domain/"+ args.url +"/passive_dns"
-    a = requests.get(url).text
-    result_json=json.loads(a)
+    result_json = requests.get(url).json()
     hostname = args.url
     for i in range(0,100):
         try:
@@ -166,41 +165,36 @@ def getkey(keyname):
 
 def checkkeys():
     keys=getkey('all')
-    global emptyapikeys,apierrors
+    global apierrors
     for x in keys:
         y=x.split('_')[0]
         if keys[x] is None or keys[x]=='':
-            emptyapikeys.append(y)
+            apierrors[y]="No API Keys Found!!"
         else:
             if y=='shodan':
                 if requests.get(f"https://api.shodan.io/shodan/host/8.8.8.8?key={keys[x]}").status_code!=200:
-                    apierrors.append(y)
+                    apierrors[y]="Invalid API Keys!!"
             elif y=='binaryedge':
                 if requests.get('https://api.binaryedge.io/v2/user/subscription',headers={'X-Key':f"{keys[x]}"}).status_code!=200:
-                    apierrors.append(y)
+                    apierrors[y]="Invalid API Keys!!"
             elif y=='virustotal':
                 if requests.get(f"https://www.virustotal.com/vtapi/v2/domain/report?apikey={keys[x]}").status_code!=200:
-                    apierrors.append(y)
+                    apierrors[y]="Invalid API Keys!!"
             elif y=='securitytrails':
                 if requests.get("https://api.securitytrails.com/v1/history/trello.com/dns/a",headers={'Content-Type':"application/json",'apikey':f"{keys[x]}"}).status_code!=200:
-                    apierrors.append(y)
+                    apierrors[y]="Invalid API Keys!!"
 
-      
-        
+                    
 def displaystatus():
     checkkeys()
-    global emptyapikeys,apierrors
+    global apierrors
     print(f"{logo+css['cyan']+css['bright']}Engines\t\t\tStatus\t\tReason{css['reset']}\n")
-    for x in ['google','bing','duckduckgo','alienvault','urlscan','threatcrowd','rapiddns']:
-        print(f"{css['green']+css['bright']}{x:<15}\t\tActive{css['reset']}")
-    for x in ['shodan','virustotal','securitytrails','binaryedge']:
-        if x in emptyapikeys:
-            print(f"{css['red']+css['bright']}{x:<15}\t\tInactive\tNo API Keys Found!!{css['reset']}")
-        elif x in apierrors:
-            print(f"{css['red']+css['bright']}{x:<15}\t\tInactive\tInvalid API Keys!!{css['reset']}")
+    for x in ['google','bing','duckduckgo','alienvault','urlscan','threatcrowd','rapiddns','shodan','virustotal','securitytrails','binaryedge']:
+        if x in apierrors:
+            print(f"{css['red']+css['bright']}{x:<15}\t\tInnactive\t{apierrors[x]}{css['reset']}")
         else:
             print(f"{css['green']+css['bright']}{x:<15}\t\tActive{css['reset']}")
-    
+               
 
 displaystatus()
 if(args.engine == 'all'):
@@ -211,15 +205,15 @@ if(args.engine == 'all'):
     rapiddns()
     threatcrowd()
     urlscan()
-    for y in [x for x in ['shodan','binaryedge','virustotal','securitytrails'] if x not in apierrors+emptyapikeys]:
+    for y in [x for x in ['shodan','binaryedge','virustotal','securitytrails'] if x not in apierrors]:
         exec(f'{y}()')
     f.close()
     removeDups(args.file)
 
 elif args.engine in ['google','bing','duckduckgo','shodan','alienvault','virustotal','urlscan','threatcrowd','securitytrails','rapiddns','binaryedge']:
-    if args.engine in apierrors+emptyapikeys:
+    if args.engine in apierrors:
         f.close()
-        print(f"\n{css['red']+css['bright']}can't use {args.engine}!!!{css['reset']}")
+        print(f"\n{css['red']+css['bright']}can't use {args.engine} because of the following problem: {apierrors[args.engine]}{css['reset']}")
     else:
         exec(f"{args.engine}()")
         f.close()
