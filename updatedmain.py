@@ -38,6 +38,7 @@ args = ar.parse_args()
 pattern = "(https?://|www\.)?((?:[\d\w\.\-]+)?" + args.url.lstrip('.').split()[0] + ")"
 f = open(args.file, mode='a+', encoding='utf-8')
 apierrors={}
+
 def google():
     for i in range(0,110,10):
         url = "https://www.google.com/search?q=site%3a"+args.url+"&start="+str(i)
