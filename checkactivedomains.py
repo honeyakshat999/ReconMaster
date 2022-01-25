@@ -1,6 +1,6 @@
 import requests
 from multiprocessing import Pool
-
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 
 maxprocessors=4
