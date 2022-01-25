@@ -12,7 +12,7 @@ def readata():
 
 def active_urls(url):
     try:
-        if requests.get(f"http://{url}",verify=False).status_code==200:
+        if requests.get(f"http://{url}",verify=False).status_code<404:
             return url
     except:
         return
