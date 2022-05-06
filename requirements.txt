@@ -1,0 +1,8 @@
+argparse
+flask
+pandas
+requests
+agrparse
+pybinaryedge
+warnings
+python-Wappalyzer
