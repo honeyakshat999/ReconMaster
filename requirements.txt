@@ -2,7 +2,6 @@ argparse
 flask
 pandas
 requests
-agrparse
 pybinaryedge
-warnings
+shodan
 python-Wappalyzer
