@@ -83,7 +83,7 @@ What's new in next update :
 
 * Improved User Interface
 * Improved Efficiency
-* Faser Execution than current version
+* Faser Execution than current version(Although it is still fast)
 * Probably A New Module
 
 
