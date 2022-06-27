@@ -52,13 +52,12 @@ commands:
 * For `linux` and `mac` :
 ```
 python3 reconmaster.py -U google.com
-#python3 reconmaster.py -U google.com -E duckduckgo
+#with Engine:
+python3 reconmaster.py -U google.com -E duckduckgo
 ```
 * For `windows` :
 ```
 python reconmaster.py -U google.com
-::python reconmaster.py -U google.com -E duckduckgo
+::with Engine
+python reconmaster.py -U google.com -E duckduckgo
 ```
-
-
-
