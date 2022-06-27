@@ -5,3 +5,4 @@ requests
 pybinaryedge
 python-Wappalyzer
 python-dotenv
+shodan
