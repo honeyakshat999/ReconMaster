@@ -1,0 +1,7 @@
+argparse
+flask
+pandas
+requests
+pybinaryedge
+python-Wappalyzer
+python-dotenv

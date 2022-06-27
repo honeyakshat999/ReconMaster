@@ -1,0 +1,7 @@
+{
+    "save_path" : "results/",
+    "log_path" : "logs/",
+    "log_file_name" : "ReconMaster",
+    "max_processors" : 4,
+    "env_path" : "./key.env"
+}
