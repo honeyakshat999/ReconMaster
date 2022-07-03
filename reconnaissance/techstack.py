@@ -47,7 +47,7 @@ def readstack(inpfile):
 def gettechstackdata(url):
     try:
         simplifieddata={"url":url,"versions":[]}
-        webpage = WebPage.new_from_url(f"http://{url}",timeout=2.50)
+        webpage = WebPage.new_from_url(f"http://{url}",timeout=helper.get_config("request_timeout"))
         wappalyzer = Wappalyzer.latest()
         data = wappalyzer.analyze_with_versions_and_categories(webpage)
         for x in data:
