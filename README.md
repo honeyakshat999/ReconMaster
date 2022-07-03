@@ -32,7 +32,9 @@ pip3 install -r requirements.txt    #installing dependencies in virtual environm
 * For `windows` :
 
 ```
-::go to https://www.python.org/downloads/ and download and install python(If you already have python3 installed skip this step)
+::go to https://www.python.org/downloads/ and download and install python(If you already have python installed skip this step)
+::or
+::go to microsoft store and install python from there(If you already have python3 installed skip this step)
 python -m venv venv                   ::creating virtual environment
 venv\Scripts\activate                 ::activating virtual environment
 pip install -r requirements.txt       ::installing dependencies in virtual environment
@@ -75,14 +77,29 @@ So you can access it by pasting the below url to any browser :
 http://127.0.0.1:5000
 ```
 
+## Current Update
+
+previous version : v1.0
+
+current version after update : v1.2
+
+what's done in update :
+
+* Added Search functionality in Historic Data Module
+* Added dashboard page
+* Minor improvements in UI
+* Minor improvements in code
+* Added 'request_timeout' in config(now you have control over request timeout via config.json)
+
 ## Upcoming Update
 
 The next update is rolling out very soon, **Stay Tuned :)**
 
 What's new in next update :
 
-* Improved User Interface
-* Improved Efficiency
+* Pages(displaying data in batches) in Historic Data Module
+* Exit Server functionality in UI
+* Improved UI
 * Faser Execution than current version(Although it is still fast)
 * Probably A New Module
 
