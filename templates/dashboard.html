@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <h3 class="page-title"> Dashboard </h3>
+  </div>
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> Available Recons </h4>
+        <div class="container-fluid">
+      {% for dir in dirs[0] %}
+        <form action="{{url_for('dashboard')}}" method="POST" name="recon">
+        <p>
+        <button type="submit" class="btn bg-transparent" name="runpath" value="{{ dir|safe }}"><img src="assets/images/L.png" width="38" height="38">{{ dir|safe }}</button>
+        </p>
+        </form>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
