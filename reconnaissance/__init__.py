@@ -21,7 +21,7 @@ def init_recon(url,engine,filepath):
         elif name=="HISTORIC":
             init_historic(url,filepath)
         else:
-            init_portscaning(url,filepath,3)
+            init_portscaning(url,filepath,helper.get_config("request_timeout"))
         
     map_dict={"WRITESTATUS":"subdomain module","INIT_PROB":"probing module","TECHSTACK":"techstack module",
               "HISTORIC":"historic(web archieve) module","PORTSCANING":"port scaning module"}
