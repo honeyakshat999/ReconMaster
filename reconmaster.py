@@ -1,5 +1,5 @@
 import argparse
-from flask import Flask,render_template,url_for,session
+from flask import Flask,render_template,url_for,request,redirect
 from pandas import read_csv
 from utils import helper
 from reconnaissance import init_recon
@@ -28,7 +28,8 @@ binaryedge      (api key required)"""
 
 
 args = ar.parse_args()
-filepath = os.path.join(helper.get_config('save_path'),args.url.split('.')[0])
+urlname=args.url.split('.')[0]
+filepath = os.path.join(helper.get_config('save_path'),urlname)
 app = Flask(__name__,static_folder='templates/assets')
 logger = helper.LOGGER
 
@@ -36,33 +37,48 @@ logger = helper.LOGGER
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',urlname=urlname)
 
-@app.route("/subdomain",methods=("POST", "GET"))
+@app.route("/dashboard",methods=("POST", "GET"))
+def dashboard():
+    global filepath,urlname
+    dirs=[x[1] for x in os.walk(filepath.rsplit("/")[0])]
+    if request.method=="POST":
+        urlname=request.form['runpath']
+        filepath=os.path.join(helper.get_config('save_path'),urlname)
+        return redirect(url_for('index',urlname=urlname))
+    else:
+        return render_template('dashboard.html',dirs=dirs,urlname=urlname)
+
+
+@app.route("/subdomain")
 def subdomain():
-    subdomaindata=read_csv(os.path.join(filepath,'subdomain.csv'))
-    return render_template("subdomain.html",tables=[subdomaindata.to_html(classes="table table-dark",justify="left")],subdomain=args.url.split('.')[0])
+    subdomaindata=read_csv(os.path.join(filepath,'subdomain.csv'),on_bad_lines='skip')
+    return render_template("subdomain.html",tables=[subdomaindata.to_html(classes="table table-dark",justify="left")],subdomain=urlname,urlname=urlname)
 
-@app.route("/probing",methods=("POST", "GET"))
+@app.route("/probing")
 def probing():
-    probingdata=read_csv(os.path.join(filepath,'probing.csv'))
+    probingdata=read_csv(os.path.join(filepath,'probing.csv'),on_bad_lines='skip')
     count=probingdata['status'].value_counts()
-    return render_template("probing.html",tables=[probingdata.to_html(classes="table",justify="left")],Dead=count["Dead"],Live=count["Live"])
+    return render_template("probing.html",tables=[probingdata.to_html(classes="table",justify="left")],Dead=count["Dead"],Live=count["Live"],urlname=urlname)
 
 @app.route("/techstack")
 def techstacks():
-    techstackdata=read_csv(os.path.join(filepath,'techstack.csv'))
-    return render_template("techstack.html",tables=[techstackdata.to_html(classes="table table-dark",justify="left")])
+    techstackdata=read_csv(os.path.join(filepath,'techstack.csv'),on_bad_lines='skip')
+    return render_template("techstack.html",tables=[techstackdata.to_html(classes="table table-dark",justify="left")],urlname=urlname)
 
-@app.route("/historic")
+@app.route("/historic",methods=("POST", "GET"))
 def history():
     historicdata=read_csv(os.path.join(filepath,'historic.csv'),on_bad_lines='skip')
-    return render_template("historical.html",tables=[historicdata.to_html(classes="table table-dark",justify="left")],domain=args.url.split('.')[0])
+    if request.method=="GET":
+        if "search" in request.args:
+            historicdata=historicdata[historicdata["Historic Data"].str.contains(request.args["search"])]
+    return render_template("historical.html",tables=[historicdata.to_html(classes="table table-dark",justify="left")],domain=urlname,urlname=urlname)
 
 @app.route("/portscaning")
 def scaning():
-    scaningdata=read_csv(os.path.join(filepath,'scaning.csv'))
-    return render_template("portscaning.html",tables=[scaningdata.to_html(classes="table table-dark",justify="left")])
+    scaningdata=read_csv(os.path.join(filepath,'scaning.csv'),on_bad_lines='skip')
+    return render_template("portscaning.html",tables=[scaningdata.to_html(classes="table table-dark",justify="left")],urlname=urlname)
 
 @app.errorhandler(404)
 def page_not_found(e):
