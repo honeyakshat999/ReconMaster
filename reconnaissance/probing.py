@@ -22,7 +22,7 @@ def readata(inputfile):
 
 def active_urls(url):
     try:
-        if requests.get(f"http://{url}",verify=False,timeout=2.50).status_code<400:
+        if requests.get(f"http://{url}",verify=False,timeout=helper.get_config("request_timeout")).status_code<400:
             return url
     except:
         return
