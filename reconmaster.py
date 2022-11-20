@@ -1,13 +1,13 @@
 import argparse
 from flask import Flask,render_template,url_for,request,redirect
 from pandas import read_csv
-from utils import helper
+from utils import utilities
 from reconnaissance import init_recon
 import os
 
 
 
-ar = argparse.ArgumentParser(description=helper.LOGO+'List of the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
+ar = argparse.ArgumentParser(description=utilities.Helper.LOGO+'List of the Required arguments',formatter_class=argparse.RawTextHelpFormatter)
 
 ar.add_argument("-U","--url", required=True,help="\nEnter Domain name without https or http.(ex- example.com)",type=str)
 ar.add_argument("-E","--engine", required=False,help="""\nWhere to collect data. 
@@ -29,9 +29,10 @@ binaryedge      (api key required)"""
 
 args = ar.parse_args()
 urlname=args.url.split('.')[0]
-filepath = os.path.join(helper.get_config('save_path'),urlname)
+filepath = os.path.join(utilities.Config.get_prop('save_path'),urlname)
 app = Flask(__name__,static_folder='templates/assets')
-logger = helper.LOGGER
+app.config['SECRET_KEY']=os.urandom(24).hex()
+logger = utilities.Helper.LOGGER
 
 
 
@@ -45,7 +46,7 @@ def dashboard():
     dirs=[x[1] for x in os.walk(filepath.rsplit("/")[0])]
     if request.method=="POST":
         urlname=request.form['runpath']
-        filepath=os.path.join(helper.get_config('save_path'),urlname)
+        filepath=os.path.join(utilities.Config.get_prop('save_path'),urlname)
         return redirect(url_for('index',urlname=urlname))
     else:
         return render_template('dashboard.html',dirs=dirs,urlname=urlname)

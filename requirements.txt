@@ -6,3 +6,9 @@ pybinaryedge
 python-Wappalyzer
 python-dotenv
 shodan
+flask-login
+flask-wtf
+flask-migrate
+flask-sqlalchemy
+flask-login
+werkzeug

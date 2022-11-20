@@ -1,18 +1,18 @@
-from asyncio.log import logger
 import requests
 import re
 import os
-from utils import helper
+from utils import utilities
 
 
-logger=helper.LOGGER
+logger=utilities.Helper.LOGGER
 
 def init_historic(domain,filepath):
     try:
         logger.info("Attempting To Fetch Historic Data")
         pattern = "(https?://|www\.)?((?:[\d\w\.\-]+)?" + domain.lstrip('.').split()[0] + "(?:[\d\S]+))"
-        if not os.path.exists(helper.get_config('save_path')):
-            os.mkdir(helper.get_config("save_path"))
+        spath=utilities.Config.get_prop('save_path')
+        if not os.path.exists(spath):
+            os.mkdir(spath)
         with open(os.path.join(filepath,'historic.csv'), mode='a+', encoding='utf-8') as f:
             url = "https://web.archive.org/cdx/search/cdx?url="+ "*."+domain + "/*"
             data = requests.get(url).text

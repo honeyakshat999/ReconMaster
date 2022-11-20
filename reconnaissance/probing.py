@@ -3,10 +3,10 @@ from multiprocessing import Pool
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 from pandas import DataFrame
 from os.path import join
-from utils import helper
+from utils import utilities
 
 
-logger=helper.LOGGER
+logger=utilities.Helper.LOGGER
 
 def readata(inputfile):
     try:
@@ -20,9 +20,9 @@ def readata(inputfile):
         logger.error(f"Unable To Read Subdomain Data Due to following Error : {e}")
 
 
-def active_urls(url):
+def active_urls(url,timeout):
     try:
-        if requests.get(f"http://{url}",verify=False,timeout=helper.get_config("request_timeout")).status_code<400:
+        if requests.get(f"http://{url}",verify=False,timeout=timeout).status_code<400:
             return url
     except:
         return
@@ -41,8 +41,10 @@ def init_prob(filepath):
         logger.info("Attempting to Probe Subdomains")
         inputfile,outputfile=join(filepath,'subdomain.csv'),join(filepath,'probing.csv')
         data=readata(inputfile)
-        with Pool(helper.get_config('max_processors')) as p:
-            checked_urls=p.map(active_urls,data["urls"].tolist())
+        urls=data["urls"].tolist()
+        timeout=utilities.Config.get_prop("request_timeout")
+        with Pool(utilities.Config.get_prop('max_processors')) as p:
+            checked_urls=p.starmap(active_urls,tuple(zip(urls,[timeout]*len(urls))))
         logger.info("Successfully Probed Subdomains")
         writedata(data,checked_urls,outputfile)
 

@@ -1,10 +1,10 @@
 import socket, threading
 from pandas import DataFrame
 from os.path import join
-from utils.helper import LOGGER
+from utils.utilities import Helper
 
 
-logger=LOGGER
+logger=Helper.LOGGER
 
 def TCP_connect(ip, port_number, delay, output):
     TCPsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

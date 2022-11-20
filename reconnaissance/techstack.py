@@ -4,19 +4,20 @@ from pandas import DataFrame,read_csv
 from multiprocessing import Pool
 from os.path import join
 import warnings
-from utils import helper
+from utils import utilities
 warnings.filterwarnings('ignore')
 
 
-logger=helper.LOGGER
+logger=utilities.Helper.LOGGER
 
 def init_techstack(filepath):
     try:
         urls=readstack(join(filepath,'probing.csv'))
         logger.info("Attempting to TechStack Probed Subdomains")
         if bool(urls):
+            timeout=utilities.Config.get_prop("request_timeout")
             with Pool(4) as p:
-                data=p.map(gettechstackdata,urls)
+                data=p.starmap(gettechstackdata,tuple(zip(urls,[timeout]*len(urls))))
         else:
             data=[]
         logger.info("Successfully TechStacked Probed Subdomains")
@@ -44,10 +45,10 @@ def readstack(inpfile):
     
 
 
-def gettechstackdata(url):
+def gettechstackdata(url,timeout):
     try:
         simplifieddata={"url":url,"versions":[]}
-        webpage = WebPage.new_from_url(f"http://{url}",timeout=helper.get_config("request_timeout"))
+        webpage = WebPage.new_from_url(f"http://{url}",timeout=timeout)
         wappalyzer = Wappalyzer.latest()
         data = wappalyzer.analyze_with_versions_and_categories(webpage)
         for x in data:

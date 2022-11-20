@@ -6,11 +6,11 @@ from pybinaryedge import BinaryEdge
 from pandas import DataFrame
 from os.path import join
 from utils import consts
-from utils.helper import LOGGER
+from utils.utilities import Helper
 
 
 output={"urls":[],"engine":[]}
-logger=LOGGER
+logger=Helper.LOGGER
 
 def google(url,pattern):
     try:
