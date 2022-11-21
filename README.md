@@ -28,9 +28,9 @@ chmod +x click.sh                                       #give execution permissi
 
 ```
 ::go to https://www.python.org/downloads/ or go to microsoft store and download and install python(If you already have python installed skip this step)
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned       #if ExecutionPolicy is setted to restricted(by default) it's like giving execution permission    
-.\click.ps1                                               #execute this it will automatically gather all the requirements 
-                                                          #and create and activate virtual environment
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned     #if ExecutionPolicy is setted to restricted(by default) it's like giving execution permission    
+.\click.ps1                                             #execute this it will automatically gather all the requirements 
+                                                        #and create and activate virtual environment
 ```
 
 ## Usage
