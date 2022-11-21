@@ -11,34 +11,26 @@ ReconMaster is a Reconnamace enumeration tool. it will automate the gathering, a
 
 ```
 git clone https://github.com/honeyakshat999/ReconMaster.git
-sudo apt-get install -y python3
-pip3 install -r requirements.txt
 ```
 
-If you want to have a virtual environment then:
+After Cloning :
 
 * For `mac` and `linux` :
 
 ```
-git clone https://github.com/honeyakshat999/ReconMaster.git
-sudo apt-get install -y python3     #If you already have python3 installed skip this step
-pip3 install virtualenv
-python3 -m virtualenv venv          #creating virtual environment
-source venv/bin/activate            #activating virtual environment
-pip3 install -r requirements.txt    #installing dependencies in virtual environment
-#deactivate                         #use this for getting out from virtual environment
+sudo apt-get install -y python3                         #If you already have python3 installed skip this step
+chmod +x click.sh                                       #give execution permission
+.\click.sh                                              #execute this it will automatically gather all the requirements 
+                                                        #and create and activate virtual environment
 ```
 
 * For `windows` :
 
 ```
-::go to https://www.python.org/downloads/ and download and install python(If you already have python installed skip this step)
-::or
-::go to microsoft store and install python from there(If you already have python3 installed skip this step)
-python -m venv venv                   ::creating virtual environment
-venv\Scripts\activate                 ::activating virtual environment
-pip install -r requirements.txt       ::installing dependencies in virtual environment
-::venv\Scripts\deactivate             ::use this for getting out from virtual environment
+::go to https://www.python.org/downloads/ or go to microsoft store and download and install python(If you already have python installed skip this step)
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned       #if ExecutionPolicy is setted to restricted(by default) it's like giving execution permission    
+.\click.ps1                                               #execute this it will automatically gather all the requirements 
+                                                          #and create and activate virtual environment
 ```
 
 ## Usage
@@ -81,15 +73,14 @@ http://127.0.0.1:5000
 
 previous version : v1.0
 
-current version after update : v1.2
+current version after update : v1.2.1
 
 what's done in update :
 
-* Added Search functionality in Historic Data Module
+* Added Login functionality
 * Added dashboard page
 * Minor improvements in UI
 * Minor improvements in code
-* Added 'request_timeout' in config(now you have control over request timeout via config.json)
 
 ## Upcoming Update
 
