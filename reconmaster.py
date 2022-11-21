@@ -144,4 +144,4 @@ def page_not_found(e):
 
 if __name__=="__main__":
     init_recon(args.url,args.engine,filepath)
-    app.run(debug=True)
+    app.run()
