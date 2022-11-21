@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 import os
-from . import consts
+from utils import consts
 import json
 import requests
 

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+{% for message in form.password.errors %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{message}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Signup</h3>
+                <form method="POST">
+                    {{form.hidden_tag()}}
+                  <div class="form-group">
+                    <label>{{form.username.label}}</label>
+                    {{form.username(class_="form-control p_input")}}
+                  </div>
+                  <div class="form-group">
+                    <label>{{form.gender.label}}</label>
+                    {{form.gender(class_="form-control p_input")}}
+                  </div>
+                  <div class="form-group">
+                    <label>{{form.password.label}}</label>
+                    {{form.password(class_="form-control p_input")}}
+                  </div>
+                  <div class="form-group">
+                    <label>{{form.conf_password.label}}</label>
+                    {{form.conf_password(class_="form-control p_input")}}
+                  </div>
+                  <div class="text-center">
+                    {{form.submit(class_="btn btn-primary btn-block enter-btn")}}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+        </div>
+        <!-- row ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+{% endblock %}

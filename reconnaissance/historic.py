@@ -1,16 +1,16 @@
 import requests
 import re
 import os
-from utils import utilities
+from utils.utilities import Helper,Config
 
 
-logger=utilities.Helper.LOGGER
+logger=Helper.LOGGER
 
 def init_historic(domain,filepath):
     try:
         logger.info("Attempting To Fetch Historic Data")
         pattern = "(https?://|www\.)?((?:[\d\w\.\-]+)?" + domain.lstrip('.').split()[0] + "(?:[\d\S]+))"
-        spath=utilities.Config.get_prop('save_path')
+        spath=Config.get_prop('save_path')
         if not os.path.exists(spath):
             os.mkdir(spath)
         with open(os.path.join(filepath,'historic.csv'), mode='a+', encoding='utf-8') as f:

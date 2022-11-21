@@ -3,10 +3,10 @@ from multiprocessing import Pool
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 from pandas import DataFrame
 from os.path import join
-from utils import utilities
+from utils.utilities import Helper,Config
 
 
-logger=utilities.Helper.LOGGER
+logger=Helper.LOGGER
 
 def readata(inputfile):
     try:
@@ -42,8 +42,8 @@ def init_prob(filepath):
         inputfile,outputfile=join(filepath,'subdomain.csv'),join(filepath,'probing.csv')
         data=readata(inputfile)
         urls=data["urls"].tolist()
-        timeout=utilities.Config.get_prop("request_timeout")
-        with Pool(utilities.Config.get_prop('max_processors')) as p:
+        timeout=Config.get_prop("request_timeout")
+        with Pool(Config.get_prop('max_processors')) as p:
             checked_urls=p.starmap(active_urls,tuple(zip(urls,[timeout]*len(urls))))
         logger.info("Successfully Probed Subdomains")
         writedata(data,checked_urls,outputfile)

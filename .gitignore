@@ -5,3 +5,5 @@ results/
 .*csv
 .*env
 logs/
+migrations/
+.*sqlite

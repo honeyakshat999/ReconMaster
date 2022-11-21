@@ -4,18 +4,18 @@ from pandas import DataFrame,read_csv
 from multiprocessing import Pool
 from os.path import join
 import warnings
-from utils import utilities
+from utils.utilities import Helper,Config
 warnings.filterwarnings('ignore')
 
 
-logger=utilities.Helper.LOGGER
+logger=Helper.LOGGER
 
 def init_techstack(filepath):
     try:
         urls=readstack(join(filepath,'probing.csv'))
         logger.info("Attempting to TechStack Probed Subdomains")
         if bool(urls):
-            timeout=utilities.Config.get_prop("request_timeout")
+            timeout=Config.get_prop("request_timeout")
             with Pool(4) as p:
                 data=p.starmap(gettechstackdata,tuple(zip(urls,[timeout]*len(urls))))
         else:
