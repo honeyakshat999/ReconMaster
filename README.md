@@ -14,5 +14,6 @@ ReconMaster is a Reconnamace enumeration tool. it will automate the gathering, a
 
 **Kindly Visit master Branch**
 
+**Kindly Visit develop Branch for beta updates**
 
 **Note :** This tool is made for educational purposes and to help security researchers. Any actions or activities performed using this is solely your responsibility
