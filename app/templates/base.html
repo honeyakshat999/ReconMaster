@@ -28,6 +28,16 @@
         </div>
         <ul class="nav">
           {% if current_user.is_authenticated %}
+          <li class="nav-item profile">
+            <div class="profile-desc">
+              <div class="profile-name">
+                <h5 class="mb-0 font-weight-normal">
+                  <img class="img-thumbnail" src="assets/images/faces-clipart/user.png" alt="user" />
+                  {{current_user.username}}
+                </h5>
+              </div>
+            </div>
+        </li>
           <li class="nav-item nav-category">
             <span class="nav-link">Reports</span>
           </li>
@@ -129,9 +139,9 @@
               {% endif %}
             </div>
             <ul class="navbar-nav navbar-nav-right">
-              <div class="navbar-profile">
-                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{current_user.username}}</p>
-              </div>
+              <li class="nav-item">
+                <a class="btn btn-outline-danger float-right" href="{{url_for('logoff')}}">Shutdown</a>
+              </li>
             </ul>
           </div>
         </nav>

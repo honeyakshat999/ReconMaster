@@ -4,6 +4,8 @@ import os
 from utils import consts
 import json
 import requests
+from werkzeug.serving import make_server
+from threading import Thread
 
 class Logger:
     
@@ -57,6 +59,26 @@ class Logger:
         self.logger.addHandler(fh)
 
 
+class Server:
+
+    def __init__(self,app,host,port,threaded=False,processes=1):
+        self.server = make_server(host, port, app, threaded, processes)
+        self.logger=Logger.Logger("Server",[True,False])
+        self.threads=[]
+
+    def run(self):
+        runthread=Thread(target=self.server.serve_forever,name="ServerThreadRun")
+        self.threads.append(runthread)
+        runthread.start()
+        self.logger.info(f"Server Started on {self.server.host}:{self.server.port}")
+
+    def shutdown(self):
+        stopthread=Thread(target=self.server.shutdown,name="ServerThreadShut")
+        self.threads.append(stopthread)
+        stopthread.start()
+        self.logger.info(f"Server Stoped")
+
+
 class Config:
 
     def __init__(self):
@@ -81,8 +103,8 @@ class Helper:
 
     LOGGER=Logger.Logger("Reconmaster",True)
     LOGO="""
-    __                                          _            
-    /__\ ___  ___ ___  _ __  _ __ ___   __ _ ___| |_ ___ _ __ 
+      __                                          _            
+     /__\ ___  ___ ___  _ __  _ __ ___   __ _ ___| |_ ___ _ __ 
     / \/// _ \/ __/ _ \| '_ \| '_ ` _ \ / _` / __| __/ _ \ '__|
     / _  \  __/ (_| (_) | | | | | | | | | (_| \__ \ ||  __/ |   
     \/ \_/\___|\___\___/|_| |_|_| |_| |_|\__,_|___/\__\___|_|   

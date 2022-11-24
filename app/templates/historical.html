@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="page-header">
-<h3 class="page-title"> Historical Data Of {{domain}}</h3>
+<h3 class="page-title"> Historical Data Of {{domain}} {% if search %} contaning {{search}} {% endif %}</h3>
 <div class="float-right">
-<form action="{{url_for('history')}}",method="GET">
+<form method="GET">
   <div class="input-group">
-    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" autocomplete="off"/>
+    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" autocomplete="off" value="{{search}}"/>
     <button type="submit" class="btn btn-outline-primary">search</button>
   </div>
 </form>
@@ -20,7 +20,30 @@
         {{ table|safe }}
     {% endfor %}
       </div>
+    <p>Displaying {{start}}-{{end}} of {{historicdatalen}} rows (page={{page+1}}) </p>
     </div>
+    <div>
+      <ul class="pagination justify-content-end">
+        {% if page<=0 %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        {% else %}          
+        <li class="page-item">
+          <a class="page-link" href="{{url_for('history',page=page-1,search=search)}}" tabindex="-1">Previous</a>
+        </li>
+        {% endif %}
+        {% if end>=historicdatalen and historicdatalen>0 %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a class="page-link" href="{{url_for('history',page=page+1,search=search)}}">Next</a>
+        </li>
+        {% endif %}
+      </ul>
+      </div>
   </div>
 </div>
 {% endblock %}

@@ -1,9 +1,8 @@
 venv/
-.*log
+*.log
 __pycache__
 results/
-.*csv
-.*env
+*.csv
 logs/
 migrations/
-.*sqlite
+*.sqlite
