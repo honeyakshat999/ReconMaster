@@ -77,7 +77,7 @@ def signup():
         return render_template("signup.html",form=form)
     except ValidationError as e:
         flash(str(e))
-        render_template("signup.html",form=form)
+        return render_template("signup.html",form=form)
     
 
 
