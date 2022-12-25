@@ -40,6 +40,7 @@ Run `reconmaster.py` with arguments as follows :
 * `-h` or `--help`             : help regarding reconmaster and list all the accepted parameters
 * `-U` or `--url` (required)   : for entering the domain e.g google.com
 * `-E` or `--engine`           : for entering the prefered engine(default `all`) e.g bing
+* `-S` or `--serveronly`       : for running only server(default `false`)
 
 commands:
 
@@ -80,13 +81,13 @@ what's done in update :
 * Added Server Shutdown from UI
 * Pages(displaying data in batches) in Historic Data Module
 * Minor improvements in UI
+* improved logs
 
 ## Upcoming Update
 
 The next update is rolling out very soon, **Stay Tuned :)**
 
 What's new in next update :
-
 * Bugfixes
 * improved logs
 * Improved UI
