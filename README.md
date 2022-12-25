@@ -89,7 +89,6 @@ The next update is rolling out very soon, **Stay Tuned :)**
 
 What's new in next update :
 * Bugfixes
-* improved logs
 * Improved UI
 * Faser Execution than current version(Although it is still fast)
 * Probably A New Module
