@@ -16,7 +16,7 @@ class Logger:
         self.format='%(asctime)s.%(msecs)03d - %(name)s - %(levelname)s - %(message)s'
         self.formatter=logging.Formatter(self.format,datefmt='%Y-%m-%d %H:%M:%S')
         self.logger=logging.getLogger(self.name)
-        self.logger.setLevel(self.level)
+        #self.logger.setLevel(self.level)
 
     def _map_level(self):
         levels={
@@ -34,11 +34,13 @@ class Logger:
         logger=cls(name,level)
         if isinstance(addHandlers,(list,tuple)):
             if bool(addHandlers[0]):
-                logger.add_stream_handler()
+                if not any([isinstance(handler,logging.StreamHandler) for handler in logger.logger.handlers]):
+                    logger.add_stream_handler()
             if bool(addHandlers[-1]):
-                logger.add_file_handler()
-        else: 
-            if bool(addHandlers):
+                if not any([isinstance(handler,logging.FileHandler) for handler in logger.logger.handlers]):
+                        logger.add_file_handler()
+        else:
+            if not any([handler for handler in logger.logger.handlers if isinstance(handler,logging.FileHandler) or isinstance(handler,logging.StreamHandler)]):
                 logger.add_stream_handler()
                 logger.add_file_handler()
         return logger.logger
@@ -54,16 +56,19 @@ class Logger:
         if not os.path.exists(os.path.join(os.getcwd(),logpath)):
             os.makedirs(logpath)
         logfile=f"{datetime.strftime(datetime.now(),'%Y-%h-%d %H%M%S')}.log"
-        fh = logging.FileHandler(filename=os.path.join(logpath,logfile),mode="w",encoding='utf-8')
+        fh = logging.FileHandler(filename=os.path.join(logpath,logfile),mode="w",encoding='utf-8',delay=True)
         fh.setFormatter(self.formatter)
+        fh.setLevel(self.level)
         self.logger.addHandler(fh)
-
+    
+    def shutdown(self):
+        self.logger.shutdown()
 
 class Server:
 
     def __init__(self,app,host,port,threaded=False,processes=1):
         self.server = make_server(host, port, app, threaded, processes)
-        self.logger=Logger.Logger("Server",[True,False])
+        self.logger=Helper.LOGGER
         self.threads=[]
 
     def run(self):
@@ -98,10 +103,18 @@ class Config:
             config=cls()
             return config.config[propname]
 
+    @classmethod
+    def get_props(cls,propnames):
+        try:
+            if cls.config:
+                return [cls.config[propname] for propname in propnames]
+        except AttributeError:
+            config=cls()
+            return [config.config[propname] for propname in propnames]
 
 class Helper:
 
-    LOGGER=Logger.Logger("Reconmaster",True)
+    LOGGER=Logger.Logger("Reconmaster",Config.get_props(["show_logs","write_logs"]))
     LOGO="""
       __                                          _            
      /__\ ___  ___ ___  _ __  _ __ ___   __ _ ___| |_ ___ _ __ 

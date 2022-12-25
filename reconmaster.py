@@ -59,6 +59,7 @@ def signin():
             return redirect(nxt)
         else:
             flash("Credientials not matched!!! kindly check username or password")
+            return render_template("signin.html",form=form)
     return render_template("signin.html",form=form)
 
 
@@ -159,7 +160,7 @@ def scaning():
 @app.route("/logoff")
 def logoff():
     server.shutdown()
-    return jsonify({"status":"Successfully Terminated Reconmaster"})
+    return jsonify({"status":"Server Shuted Down Successfully","message":"Thanks For Using Reconmaster"})
 
 @app.errorhandler(404)
 def page_not_found(e):

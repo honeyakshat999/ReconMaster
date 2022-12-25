@@ -2,5 +2,7 @@
     "save_path" : "results/",
     "log_path" : "logs/",
     "max_processors" : 4,
-    "request_timeout" : 2.50
+    "request_timeout" : 2.50,
+    "show_logs":true,
+    "write_logs":false    
 }
